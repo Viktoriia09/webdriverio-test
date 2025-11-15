@@ -6,6 +6,7 @@ class CartPage{
     get checkOut() { return $('#checkout');}    
     get cartItems() { return $$('#cart_contents_container.cart_list.cart_item');}
     get cartContentsContainer() { return $('#cart_contents_container'); }    
+    get continueShoppingButton() { return $('#continue-shopping'); }
     
     async getNumberOfProduct() {
         return await this.shoppingCartBadge.getText();
@@ -30,6 +31,9 @@ class CartPage{
     }
     async clickCheckoutButton() {
         return await this.checkOut.click(); 
+    }
+    async clickContinueShoppingButton() {
+        return await this.continueShoppingButton.click();
     }
     
 }

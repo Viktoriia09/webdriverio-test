@@ -2,7 +2,7 @@ class MainPage{
 
     get productName() { return $('.inventory_item_name'); }
     get productPrice() { return $('.inventory_item_price'); }
-    get checkRemoveText() { return $('#remove-sauce-labs-backpack'); }
+    get removeCartButton() { return $('#remove-sauce-labs-backpack'); }
     get addToCart() { return $('#add-to-cart-sauce-labs-backpack'); }
     get shoppingCarBadge() { return $('.shopping_cart_badge'); }
     get shoppingCartContainer() { return $('#shopping_cart_container'); }
@@ -37,6 +37,9 @@ class MainPage{
 
     async clickAddToCartButton(){
         return await this.addToCart.click();
+    }
+    async clickRemoveCartButton() {
+        return await this.removeCartButton.click();
     }
     async clickCartButton() {
         await this.shoppingCartContainer.click();

@@ -50,11 +50,11 @@ describe('Task for QA5', () => {
 
     it('ID - 5 - Saving the card after logout ', async () => {
         await loginPage.login('standard_user', 'secret_sauce');
-        await mainPage.clickAddToCartButton();
+        await mainPage.clickAddToCartButton(); 
         await mainPage.verifyNumberProduct(1);
-        const text = await mainPage.checkRemoveText.getText();
-        console.log('text=', text);
-        await expect(mainPage.checkRemoveText).toHaveText('Remove');
+        const mainProductName = await mainPage.productName.getText();
+        const mainProductPrice = await mainPage.productPrice.getText();
+        await expect(mainPage.removeCartButton).toHaveText('Remove');
         
         mainPage.clickBurgerMenu();
         await expect(mainPage.menuList).toBeDisplayed();
@@ -68,11 +68,13 @@ describe('Task for QA5', () => {
         await expect(mainPage.inventoryContainer).toBeDisplayed();
         await mainPage.verifyNumberProduct(1);
 
-        await expect(mainPage.checkRemoveText).toHaveText('Remove');
+        await expect(mainPage.removeCartButton).toHaveText('Remove');
         await mainPage.clickCartButton();
         await expect(cartPage.cartContentsContainer).toBeDisplayed();
         await cartPage.verifyProduct(mainProductName, mainProductPrice);
-
+        
+        await cartPage.clickContinueShoppingButton();
+        await mainPage.clickRemoveCartButton();
     })
     it('ID-6 - ', async () => {
         
@@ -103,16 +105,14 @@ describe('Task for QA5', () => {
     it('ID-8 - Valid Checkout', async () => {
 
         await loginPage.login('standard_user','secret_sauce');
-
-        const mainProductName = await mainPage.getProductName();
-        const mainProductPrice = await mainPage.getProductPrice();
+        const mainProductName = await mainPage.productName.getText(); 
+        const mainProductPrice = await mainPage.productPrice.getText();
         await mainPage.clickAddToCartButton();
         await mainPage.verifyNumberProduct(1);
-
         await mainPage.clickCartButton();
         await cartPage.verifyNumberProduct(1);
         await cartPage.verifyProduct(mainProductName, mainProductPrice);
-
+        
         await cartPage.clickCheckoutButton();
         await expect(checkoutPage.checkoutInfoWrapper).toBeDisplayed();
 
@@ -128,11 +128,9 @@ describe('Task for QA5', () => {
         await checkoutPage.clickContinueButton();
         await expect(overViewPage.checkoutSummaryContainer).toBeDisplayed();
         await expect(overViewPage.itemName).toBeDisplayed();
-        await overViewPage.getProductName;
-        await overViewPage.getProductPrice;
         await overViewPage.verifyProduct(mainProductName, mainProductPrice);
         
-        await overViewPage.clickFinishButton();     
+        await overViewPage.clickFinishButton();  
         await expect(checkoutCompletePage.checkoutContainer).toBeDisplayed();
         await checkoutCompletePage.getCompleteText();
         await checkoutCompletePage.verifyCompleteText('Thank you for your order!');
