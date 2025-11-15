@@ -1,41 +1,36 @@
-export default class CartPage{
+class CartPage{
     
-    get shoppingCartBadge() {
-        return $('.shopping_cart_badge');
-    }
+    get shoppingCartBadge() { return $('.shopping_cart_badge'); }
+    get productName() { return $('.inventory_item_name');}
+    get productPrice() { return $('.inventory_item_price'); }  
+    get checkOut() { return $('#checkout');}    
+    get cartItems() { return $$('#cart_contents_container.cart_list.cart_item');}
+    get cartContentsContainer() { return $('#cart_contents_container'); }    
+    
     async getNumberOfProduct() {
         return await this.shoppingCartBadge.getText();
-    }
-
-    async verifyNumberProduct(number) {
-        expect(await this.getNumberOfProduct).toEqual(number);
-    }
-
-    get productName() {
-        return $('.inventory_item_name');
     }
     async getProductName() {
         return await this.productName.getText();
     }
-    
-    get productPrice() {
-        return $('.inventory_item_price');
-    }
-
     async getProductPrice() {
         return await this.productPrice.getText();
     }
-
+    async getCartItemCount() {
+        const items = await this.cartItems;
+        return items.length;
+    }
+    async verifyNumberProduct(number) {
+        const actual = await this.getNumberOfProduct();
+        expect(actual).toEqual(String(number));
+    }
     async verifyProduct(name, price) {
         expect(await this.getProductName()).toEqual(name);
         expect(await this.getProductPrice()).toEqual(price);
     }
-
-    get checkOut() {
-        return $('#checkout');
-    }
     async clickCheckoutButton() {
         return await this.checkOut.click(); 
     }
-
+    
 }
+export default new CartPage()
